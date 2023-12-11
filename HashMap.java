@@ -56,6 +56,23 @@ public class HashMap<K, V> {
         }
     }
 
+    public void removeWord(K word) {
+        int index = getBucketIndex(word);
+        LinkedList<MyMapNode<K, V>> bucket = buckets[index];
+
+        MyMapNode<K, V> nodeToRemove = null;
+        for (MyMapNode<K, V> node : bucket) {
+            if (node.key.equals(word)) {
+                nodeToRemove = node;
+                break;
+            }
+        }
+
+        if (nodeToRemove != null) {
+            bucket.remove(nodeToRemove);
+        }
+    }
+
     public void displayWordFrequency() {
         for (int i = 0; i < numBuckets; i++) {
             LinkedList<MyMapNode<K, V>> bucket = buckets[i];
@@ -85,6 +102,14 @@ public class HashMap<K, V> {
         }
 
         // Display the frequency of words
+        System.out.println("Before removal:");
+        wordFrequencyCounter.displayWordFrequency();
+
+        // Remove the word "avoidable"
+        wordFrequencyCounter.removeWord("avoidable");
+
+        // Display the frequency of words after removal
+        System.out.println("\nAfter removal:");
         wordFrequencyCounter.displayWordFrequency();
     }
 }
